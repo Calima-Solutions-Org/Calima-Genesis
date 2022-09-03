@@ -19,7 +19,7 @@ class RunCustomCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'run {signature}';
+    protected $signature = 'run {signature} {--basePath}';
 
     /**
      * The description of the command.
@@ -36,9 +36,9 @@ class RunCustomCommand extends Command
     public function handle()
     {
         $this->authenticateOrFail();
-        $command = GetCustomCommand::run($this->argument('signature'));
+        $command = GetCustomCommand::run($this->argument('signature'), $this->option('basePath'));
         if (! $command) {
-            $this->error('Invalid signture provided.');
+            $this->error('Invalid signature provided.');
             return;
         }
 

@@ -13,12 +13,12 @@ class Step
 
     }
 
-    public static function from(array $step, array $variables)
+    public static function from(array $step, array $variables, ?string $basePath = null)
     {
         $variables = collect($variables);
         return new Step(
             name: $step['name'],
-            command: $step['command'],
+            command: $basePath ? 'cd "' . $basePath . '" && ' . $step['command'] : $step['command'],
             isRequired: $step['required'] ?? false,
             conditions: array_values(array_filter(array_map(function ($condition) use ($variables) {
                 $variable = $variables->where('name', $condition['variable'])->first();
@@ -50,13 +50,12 @@ class Step
 
     public function command(array $variables = []): string
     {
-        $command = $this->command;
-        foreach ($variables as $name => $value) {
-            $command = preg_replace_callback('/\{\{([\s]*)([\w_-]+)([\s]*)\}\}/', function ($matches) use ($variables) {
-                $variable = collect($variables)->where('name', $matches[2])->first();
-                return $variable ? $variable->value() : $matches[2];
-            }, $command);
-        }
+        $genesisCommand = config('app.env') === 'production' ? 'genesis' : 'php genesis';
+        $command = preg_replace('/\{\{([\s]*)genesis([\s]*)\}\}/', $genesisCommand, $this->command);
+        $command = preg_replace_callback('/\{\{([\s]*)([\w_-]+)([\s]*)\}\}/', function ($matches) use ($variables) {
+            $variable = collect($variables)->where('name', $matches[2])->first();
+            return $variable ? $variable->value() : $matches[2];
+        }, $command);
 
         return $command;
     }
