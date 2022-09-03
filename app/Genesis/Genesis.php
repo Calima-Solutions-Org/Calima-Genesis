@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Http;
 class Genesis {
     public static function config(?array $value = null): GenesisConfig
     {
+        if (! File::exists(self::configFolder())) {
+            File::makeDirectory(self::configFolder());
+        }
+
         if ($value) {
             File::put(self::configFilePath(), json_encode($value));
         }
@@ -23,9 +27,14 @@ class Genesis {
         return GenesisConfig::from(json_decode(File::get(self::configFilePath()), true) ?: []);
     }
 
-    private static function configFilePath(): string
+    public static function configFolder(): string
     {
-        return getcwd() . '/calima-genesis.json';
+        return $_SERVER['HOME'] . '/.calima-genesis';
+    }
+
+    public static function configFilePath(): string
+    {
+        return self::configFolder() . '/genesis.json';
     }
 
     public function validateToken(): bool
