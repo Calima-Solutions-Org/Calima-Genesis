@@ -2,9 +2,8 @@
 
 namespace App\Commands;
 
-use App\Services\Genesis;
+use App\Genesis\Genesis;
 use Exception;
-use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
 class Authenticate extends Command
@@ -45,16 +44,5 @@ class Authenticate extends Command
             'token' => $token,
         ]);
         $this->info('Successfully authenticated with Genesis!');
-    }
-
-    /**
-     * Define the command's schedule.
-     *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
-     */
-    public function schedule(Schedule $schedule): void
-    {
-        // $schedule->command(static::class)->everyMinute();
     }
 }

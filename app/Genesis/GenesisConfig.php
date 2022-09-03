@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Genesis;
 
 class GenesisConfig {
     public function __construct(

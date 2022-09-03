@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Genesis;
 
 use App\Exceptions\DeactivatedUser;
 use App\Exceptions\InvalidCredentials;
@@ -32,6 +32,13 @@ class Genesis {
     {
         $response = $this->client()->get('/me');
         return $response->status() === 200;
+    }
+
+    public function getProjectType(string $name): ?ProjectType
+    {
+        $response = $this->client()->get('/project-type/' . $name);
+        $response = $response->json()['project_type'] ?? null;
+        return $response ? ProjectType::from($response) : null;
     }
 
     public function getAuthToken(string $username, string $password)
