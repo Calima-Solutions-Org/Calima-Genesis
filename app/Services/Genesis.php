@@ -28,6 +28,12 @@ class Genesis {
         return getcwd() . '/calima-genesis.json';
     }
 
+    public function validateToken(): bool
+    {
+        $response = $this->client()->get('/me');
+        return $response->status() === 200;
+    }
+
     public function getAuthToken(string $username, string $password)
     {
         $response = $this->client()->post('/login', [
@@ -51,11 +57,14 @@ class Genesis {
 
     private function client(): PendingRequest
     {
+        $config = self::config();
         return Http::acceptJson()
-            ->withHeaders([
-                'Authorization' => 'Bearer ' . config('genesis.token'),
-            ])
-            ->baseUrl($this->endpoint());
+            ->baseUrl($this->endpoint())
+            ->when($config->token, function (PendingRequest $client) use ($config) {
+                $client->withHeaders([
+                    'Authorization' => 'Bearer ' . $config->token,
+                ]);
+            });
     }
 
     private function endpoint(): string
