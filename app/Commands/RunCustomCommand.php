@@ -2,6 +2,7 @@
 
 namespace App\Commands;
 
+use App\Commands\Traits\Authenticatable;
 use App\Commands\Traits\HasSteps;
 use App\Commands\Traits\HasVariables;
 use App\Genesis\Actions\GetCustomCommand;
@@ -9,8 +10,9 @@ use LaravelZero\Framework\Commands\Command;
 
 class RunCustomCommand extends Command
 {
-    use HasVariables;
+    use Authenticatable;
     use HasSteps;
+    use HasVariables;
 
     /**
      * The signature of the command.
@@ -33,6 +35,7 @@ class RunCustomCommand extends Command
      */
     public function handle()
     {
+        $this->authenticateOrFail();
         $command = GetCustomCommand::run($this->argument('signature'));
         if (! $command) {
             $this->error('Invalid signture provided.');

@@ -2,11 +2,14 @@
 
 namespace App\Commands;
 
+use App\Commands\Traits\Authenticatable;
 use App\Genesis\Actions\GetCustomCommands;
 use LaravelZero\Framework\Commands\Command;
 
 class ListCustomCommands extends Command
 {
+    use Authenticatable;
+
     /**
      * The signature of the command.
      *
@@ -28,6 +31,7 @@ class ListCustomCommands extends Command
      */
     public function handle()
     {
+        $this->authenticateOrFail();
         $commands = GetCustomCommands::run();
         $headers = ['Signature', 'Description'];
         $rows = collect($commands)->map(fn ($command) => [
