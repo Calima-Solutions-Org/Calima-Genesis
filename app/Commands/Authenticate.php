@@ -2,6 +2,7 @@
 
 namespace App\Commands;
 
+use App\Genesis\Actions\GetAuthToken;
 use App\Genesis\Genesis;
 use Exception;
 use LaravelZero\Framework\Commands\Command;
@@ -29,11 +30,10 @@ class Authenticate extends Command
      */
     public function handle()
     {
-        $genesis = new Genesis();
         $email = $this->ask('Your email');
         $password = $this->secret('Your password');
         try {
-            $token = $genesis->getAuthToken($email, $password);
+            $token = GetAuthToken::run($email, $password);
         } catch (Exception $e) {
             $this->error($e->getMessage());
             return;

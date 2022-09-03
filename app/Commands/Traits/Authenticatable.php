@@ -2,6 +2,7 @@
 
 namespace App\Commands\Traits;
 
+use App\Genesis\Actions\ValidateToken;
 use App\Genesis\Genesis;
 
 trait Authenticatable {
@@ -9,8 +10,7 @@ trait Authenticatable {
     {
         $config = Genesis::config();
         if ($config->token) {
-            $genesis = new Genesis();
-            if (! $genesis->validateToken()) {
+            if (! ValidateToken::run()) {
                 $this->error('You are not authenticated with Genesis. Please run `genesis authenticate` to log in.');
                 abort(1);
             }

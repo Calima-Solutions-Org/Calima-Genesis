@@ -3,7 +3,7 @@
 namespace App\Commands;
 
 use App\Commands\Traits\Authenticatable;
-use App\Genesis\Genesis;
+use App\Genesis\Actions\GetProjectType;
 use App\Genesis\Step;
 use App\Genesis\Variable;
 use LaravelZero\Framework\Commands\Command;
@@ -34,8 +34,7 @@ class StartProject extends Command
     public function handle()
     {
         $this->authenticateOrFail();
-        $genesis = new Genesis();
-        $projectType = $genesis->getProjectType($this->argument('name'));
+        $projectType = GetProjectType::run($this->argument('name'));
         if (! $projectType) {
             $this->error('Invalid name provided.');
             return;
@@ -58,7 +57,6 @@ class StartProject extends Command
         }
 
         $this->info($step->name);
-        $command = str_getcsv($step->command($variables), ' ');
         $output = shell_exec($step->command($variables));
         $this->info($output);
     }
