@@ -4,7 +4,7 @@ namespace App\Commands\Traits;
 
 use App\Genesis\Step;
 
-class HasSteps {
+trait HasSteps {
     protected function runStep(Step $step, array $variables)
     {
         if (! $step->meetsConditions()) {
