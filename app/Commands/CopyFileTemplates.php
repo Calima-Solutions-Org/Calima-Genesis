@@ -8,6 +8,8 @@ use LaravelZero\Framework\Commands\Command;
 
 class CopyFileTemplates extends Command
 {
+    protected $hidden = true;
+
     /**
      * The signature of the command.
      *
