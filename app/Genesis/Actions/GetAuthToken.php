@@ -7,7 +7,8 @@ use App\Exceptions\InvalidCredentials;
 use App\Genesis\Genesis;
 use Exception;
 
-class GetAuthToken {
+class GetAuthToken
+{
     use AsAction;
 
     public function __invoke(string $username, string $password)

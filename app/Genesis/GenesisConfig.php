@@ -2,10 +2,12 @@
 
 namespace App\Genesis;
 
-class GenesisConfig {
+class GenesisConfig
+{
     public function __construct(
         public readonly ?string $token,
-    ) { }
+    ) {
+    }
 
     public static function from(array $config)
     {

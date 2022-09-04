@@ -4,7 +4,8 @@ namespace App\Genesis\Actions;
 
 use Illuminate\Support\Facades\File;
 
-class CreateDirectoryRecursively {
+class CreateDirectoryRecursively
+{
     use AsAction;
 
     public function __invoke(string $path)
@@ -16,7 +17,7 @@ class CreateDirectoryRecursively {
         array_pop($path);
         $accPath = [];
         foreach ($path as $folder) {
-            $fullPath = trim(implode(DIRECTORY_SEPARATOR, $accPath) . DIRECTORY_SEPARATOR . $folder, DIRECTORY_SEPARATOR);
+            $fullPath = trim(implode(DIRECTORY_SEPARATOR, $accPath).DIRECTORY_SEPARATOR.$folder, DIRECTORY_SEPARATOR);
             if (! File::exists($fullPath)) {
                 File::makeDirectory($fullPath);
             }

@@ -6,7 +6,8 @@ use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 
-class Genesis {
+class Genesis
+{
     public static function config(?array $value = null): GenesisConfig
     {
         if (! File::exists(self::configFolder())) {
@@ -26,22 +27,23 @@ class Genesis {
 
     public static function configFolder(): string
     {
-        return $_SERVER['HOME'] . '/.calima-genesis';
+        return $_SERVER['HOME'].'/.calima-genesis';
     }
 
     public static function configFilePath(): string
     {
-        return self::configFolder() . '/genesis.json';
+        return self::configFolder().'/genesis.json';
     }
 
     public function client(): PendingRequest
     {
         $config = self::config();
+
         return Http::acceptJson()
             ->baseUrl($this->endpoint())
             ->when($config->token, function (PendingRequest $client) use ($config) {
                 $client->withHeaders([
-                    'Authorization' => 'Bearer ' . $config->token,
+                    'Authorization' => 'Bearer '.$config->token,
                 ]);
             });
     }

@@ -5,7 +5,8 @@ namespace App\Genesis\Actions;
 use App\Genesis\FileTemplate;
 use App\Genesis\Genesis;
 
-class DownloadFileTemplates {
+class DownloadFileTemplates
+{
     use AsAction;
 
     public function __invoke(array $files)
