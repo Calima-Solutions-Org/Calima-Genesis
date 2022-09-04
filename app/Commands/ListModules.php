@@ -33,7 +33,7 @@ class ListModules extends Command
     {
         $this->authenticateOrFail();
         $modules = GetModules::run();
-        $headings = ['Module ID', 'Name', 'Desscription', 'Versions'];
+        $headings = ['Module ID', 'Name', 'Description', 'Versions'];
         $rows = collect($modules)->map(fn ($module) => [
             $module->identifier,
             $module->name,
@@ -41,5 +41,7 @@ class ListModules extends Command
             implode(', ', $module->versionSummary),
         ])->toArray();
         $this->table($headings, $rows);
+
+        $this->confirm('☀️ Do you want to install one of Genesis modules in your app?');
     }
 }
