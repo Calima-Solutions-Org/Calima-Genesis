@@ -2,7 +2,8 @@
 
 namespace App\Genesis;
 
-class ModuleVersion {
+class ModuleVersion
+{
     public function __construct(
         public readonly string $version,
         public readonly ?string $repository,
@@ -10,10 +11,10 @@ class ModuleVersion {
         public readonly array $commands,
         public readonly ?string $readme,
     ) {
-
     }
 
-    public static function from(array $data, ?string $readme, array $files): self {
+    public static function from(array $data, ?string $readme, array $files): self
+    {
         return new self(
             $data['version'],
             $data['gh_repo'] ?? null,
@@ -30,12 +31,12 @@ class ModuleVersion {
         foreach ($folder as $file) {
             if (isset($file['downloadUrl'])) {
                 $files[] = $file;
-            } else if (isset($file['files'])) {
+            } elseif (isset($file['files'])) {
                 $files = [
                     ...$files,
                     ...$file['files'],
                 ];
-            } else if (isset($file['folders'])) {
+            } elseif (isset($file['folders'])) {
                 $files = [
                     ...$files,
                     ...$this->files($file['folders']),

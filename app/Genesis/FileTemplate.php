@@ -2,16 +2,16 @@
 
 namespace App\Genesis;
 
-class FileTemplate {
+class FileTemplate
+{
     public readonly array $variables;
+
     public readonly array $steps;
 
     public function __construct(
         public readonly string $identifier,
         public readonly string $content,
-    )
-    {
-
+    ) {
     }
 
     public static function from(array $template)

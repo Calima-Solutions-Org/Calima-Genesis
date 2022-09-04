@@ -39,6 +39,7 @@ class StartProject extends Command
         $projectType = GetProjectType::run($this->argument('name'));
         if (! $projectType) {
             $this->error('Invalid name provided.');
+
             return;
         }
 

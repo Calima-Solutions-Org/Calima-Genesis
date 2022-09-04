@@ -5,7 +5,8 @@ namespace App\Commands\Traits;
 use App\Genesis\Actions\ValidateToken;
 use App\Genesis\Genesis;
 
-trait Authenticatable {
+trait Authenticatable
+{
     protected function authenticateOrFail()
     {
         $config = Genesis::config();

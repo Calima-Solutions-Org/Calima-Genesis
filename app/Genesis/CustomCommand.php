@@ -2,8 +2,10 @@
 
 namespace App\Genesis;
 
-class CustomCommand {
+class CustomCommand
+{
     public readonly array $variables;
+
     public readonly array $steps;
 
     public function __construct(

@@ -2,7 +2,8 @@
 
 namespace App\Genesis;
 
-class Variable {
+class Variable
+{
     private $value = null;
 
     public function __construct(
@@ -11,9 +12,7 @@ class Variable {
         public readonly string $type,
         public readonly bool $isRequired,
         public readonly array $options,
-    )
-    {
-
+    ) {
     }
 
     public static function from(array $variable)

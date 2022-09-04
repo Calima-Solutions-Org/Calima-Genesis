@@ -4,7 +4,8 @@ namespace App\Commands\Traits;
 
 use App\Genesis\Variable;
 
-trait HasVariables {
+trait HasVariables
+{
     protected function askVariable(Variable $variable)
     {
         switch ($variable->type) {

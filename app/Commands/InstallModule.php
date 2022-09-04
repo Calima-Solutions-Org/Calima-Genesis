@@ -34,6 +34,7 @@ class InstallModule extends Command
         $module = GetModule::run($this->argument('module'), $this->argument('version'));
         if (empty($module?->versions)) {
             $this->error('Invalid versions or module.');
+
             return;
         }
 
@@ -47,7 +48,6 @@ class InstallModule extends Command
             $contents = Http::get($file['downloadUrl'])->body();
             File::put($file['path'], $contents);
         }
-
 
         if (! empty($version->commands)) {
             $this->info('Executing commands...');

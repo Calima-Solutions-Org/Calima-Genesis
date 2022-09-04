@@ -35,7 +35,7 @@ class ListCustomCommands extends Command
         $commands = GetCustomCommands::run();
         $headers = ['Signature', 'Description'];
         $rows = collect($commands)->map(fn ($command) => [
-            $command->signature . "\n",
+            $command->signature."\n",
             $command->description,
         ])->toArray();
         $this->table($headers, $rows);

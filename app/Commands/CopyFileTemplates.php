@@ -44,7 +44,7 @@ class CopyFileTemplates extends Command
         $templates = DownloadFileTemplates::run(array_keys($templateMap));
         foreach ($templates as $template) {
             $path = trim($templateMap[$template->identifier], '/\\');
-            $this->info('Copying ' . $template->identifier . ' to ' . $path);
+            $this->info('Copying '.$template->identifier.' to '.$path);
             CreateDirectoryRecursively::run($path);
             File::put($path, $template->content);
         }

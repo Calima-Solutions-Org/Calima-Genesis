@@ -5,13 +5,13 @@ namespace App\Genesis;
 use Exception;
 use Illuminate\Support\Str;
 
-class StepCondition {
+class StepCondition
+{
     public function __construct(
         public readonly Variable $variable,
         public readonly string $operator,
         public readonly array $values,
     ) {
-
     }
 
     public function isMet(): bool
@@ -56,7 +56,7 @@ class StepCondition {
                 return $this->variable->value() === false;
                 break;
             default:
-                throw new Exception('Invalid operator: ' . $this->operator);
+                throw new Exception('Invalid operator: '.$this->operator);
         }
 
         return false;

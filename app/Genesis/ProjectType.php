@@ -2,8 +2,10 @@
 
 namespace App\Genesis;
 
-class ProjectType {
+class ProjectType
+{
     public readonly array $variables;
+
     public readonly array $steps;
 
     public function __construct(
@@ -11,8 +13,7 @@ class ProjectType {
         public readonly string $name,
         private array $variables_,
         private array $steps_,
-    )
-    {
+    ) {
         $this->variables = array_map(function ($variable) {
             return Variable::from($variable);
         }, $this->variables_);

@@ -39,6 +39,7 @@ class RunCustomCommand extends Command
         $command = GetCustomCommand::run($this->argument('signature'), $this->option('basePath'));
         if (! $command) {
             $this->error('Invalid signature provided.');
+
             return;
         }
 

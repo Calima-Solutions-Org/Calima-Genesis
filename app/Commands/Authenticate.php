@@ -36,9 +36,9 @@ class Authenticate extends Command
             $token = GetAuthToken::run($email, $password);
         } catch (Exception $e) {
             $this->error($e->getMessage());
+
             return;
         }
-
 
         Genesis::config([
             'token' => $token,
