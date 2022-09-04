@@ -57,5 +57,7 @@ class InstallModule extends Command
                 ]);
             }
         }
+
+        $this->info('🚀 Module installed successfully!');
     }
 }
