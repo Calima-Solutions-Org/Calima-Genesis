@@ -2,6 +2,7 @@
 
 namespace App\Commands;
 
+use App\Commands\Traits\Authenticatable;
 use App\Genesis\Actions\CreateDirectoryRecursively;
 use App\Genesis\Actions\DownloadFileTemplates;
 use Illuminate\Support\Facades\File;
@@ -9,6 +10,8 @@ use LaravelZero\Framework\Commands\Command;
 
 class CopyFileTemplates extends Command
 {
+    use Authenticatable;
+
     protected $hidden = true;
 
     /**
@@ -33,6 +36,8 @@ class CopyFileTemplates extends Command
      */
     public function handle()
     {
+        $this->authenticateOrFail();
+
         $templateMap = collect($this->argument('templates'))
             ->map(fn ($template) => explode(':', $template))
             ->mapWithKeys(fn ($template) => [

@@ -2,6 +2,7 @@
 
 namespace App\Commands;
 
+use App\Commands\Traits\Authenticatable;
 use App\Genesis\Actions\CreateDirectoryRecursively;
 use App\Genesis\Actions\GetModule;
 use Illuminate\Support\Facades\File;
@@ -10,6 +11,8 @@ use LaravelZero\Framework\Commands\Command;
 
 class InstallModule extends Command
 {
+    use Authenticatable;
+
     /**
      * The signature of the command.
      *
@@ -31,6 +34,8 @@ class InstallModule extends Command
      */
     public function handle()
     {
+        $this->authenticateOrFail();
+
         $module = GetModule::run($this->argument('module'), $this->argument('version'));
         if (empty($module?->versions)) {
             $this->error('Invalid versions or module.');
