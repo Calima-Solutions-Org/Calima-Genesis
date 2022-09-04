@@ -2,6 +2,7 @@
 
 namespace App\Commands;
 
+use App\Genesis\Actions\CreateDirectoryRecursively;
 use App\Genesis\Actions\DownloadFileTemplates;
 use Illuminate\Support\Facades\File;
 use LaravelZero\Framework\Commands\Command;
@@ -44,26 +45,8 @@ class CopyFileTemplates extends Command
         foreach ($templates as $template) {
             $path = trim($templateMap[$template->identifier], '/\\');
             $this->info('Copying ' . $template->identifier . ' to ' . $path);
-            $this->createDirectoryRecursively($path);
+            CreateDirectoryRecursively::run($path);
             File::put($path, $template->content);
-        }
-    }
-
-    private function createDirectoryRecursively(string $path)
-    {
-        $path = str_replace('/', DIRECTORY_SEPARATOR, $path);
-        $path = str_replace('\\', DIRECTORY_SEPARATOR, $path);
-        // create the path recursively
-        $path = explode(DIRECTORY_SEPARATOR, $path);
-        array_pop($path);
-        $accPath = [];
-        foreach ($path as $folder) {
-            $fullPath = trim(implode(DIRECTORY_SEPARATOR, $accPath) . DIRECTORY_SEPARATOR . $folder, DIRECTORY_SEPARATOR);
-            if (! File::exists($fullPath)) {
-                File::makeDirectory($fullPath);
-            }
-
-            $accPath[] = $folder;
         }
     }
 }

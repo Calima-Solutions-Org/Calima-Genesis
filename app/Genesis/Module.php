@@ -20,7 +20,11 @@ class Module {
             $module['identifier'],
             $module['name'],
             $module['description'] ?? null,
-            array_map(fn ($version) => ModuleVersion::from($version), $module['versions'] ?? []),
+            array_map(fn ($version) => ModuleVersion::from(
+                $version,
+                $module['readme'][$version['version']] ?? null,
+                $module['files'][$version['version']] ?? [],
+            ), $module['versions'] ?? []),
             $module['version_summary'] ?? [],
         );
     }
