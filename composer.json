@@ -4,7 +4,7 @@
     "keywords": ["calima", "cli", "starter kit", "helper"],
     "homepage": "https://genesis.by.calimasolutions.com",
     "type": "project",
-    "license": "GNU AGPLv3",
+    "license": "MIT",
     "support": {
         "issues": "https://github.com/calima-solutions/Calima-Genesis/issues",
         "source": "https://github.com/calima-solutions/Calima-Genesis"
