@@ -20,7 +20,7 @@ genesis authenticate
 You will be prompted for your email and password, and a token will be stored in your computer for faster access.
 
 ## Creating a new project
-Genesis provides a quick starting point for both back-end and front-end projects right from the CLI. Just run `genesis start &lt;project&gt;` and follow the wizard to create the project with Calima standards.
+Genesis provides a quick starting point for both back-end and front-end projects right from the CLI. Just run `genesis start <project>` and follow the wizard to create the project with Calima standards.
 
 ### Available projects
 
