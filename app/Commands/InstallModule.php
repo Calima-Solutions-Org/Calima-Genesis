@@ -62,9 +62,22 @@ class InstallModule extends Command
 
         $module = GetModule::run($identifier, $version);
         $version = $module->versions[0];
+        $files = $version->files();
+
+        $this->info('The following files will be installed:');
+        $this->line(collect($files)->pluck('path')->join("\n"));
+
+        if (! empty($version->commands)) {
+            $this->info('And the following commands will run:');
+            $this->line(collect($version->commands)->join("\n"));
+        }
+
+        if (! $this->confirm('Are you sure you want to continue?')) {
+            return;
+        }
+
         $this->info("Installing {$module->identifier}@{$version->version}");
 
-        $files = $version->files();
         foreach ($files as $file) {
             $this->line("Installing {$file['path']}");
             CreateDirectoryRecursively::run($file['path']);
