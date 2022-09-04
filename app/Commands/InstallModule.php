@@ -5,6 +5,7 @@ namespace App\Commands;
 use App\Commands\Traits\Authenticatable;
 use App\Genesis\Actions\CreateDirectoryRecursively;
 use App\Genesis\Actions\GetModule;
+use App\Genesis\Actions\GetModules;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use LaravelZero\Framework\Commands\Command;
@@ -18,7 +19,7 @@ class InstallModule extends Command
      *
      * @var string
      */
-    protected $signature = 'module {module} {version}';
+    protected $signature = 'module {module?} {version?}';
 
     /**
      * The description of the command.
@@ -36,19 +37,36 @@ class InstallModule extends Command
     {
         $this->authenticateOrFail();
 
-        $module = GetModule::run($this->argument('module'), $this->argument('version'));
-        if (empty($module?->versions)) {
-            $this->error('Invalid versions or module.');
+        $modules = GetModules::run();
 
+        $identifier = $this->argument('module');
+        if (is_null($identifier)) {
+            $identifier = $this->anticipate('Which module do you want to install?', collect($modules)->pluck('identifier')->toArray());
+        }
+
+        $module = collect($modules)->firstWhere('identifier', $identifier);
+        if (is_null($module)) {
+            $this->error('Module not found.');
             return;
         }
 
+        $version = $this->argument('version');
+        if (is_null($version)) {
+            $version = $this->anticipate('Which version?', $module->versionSummary);
+        }
+
+        if (! in_array($version, $module->versionSummary)) {
+            $this->error('Version not found.');
+            return;
+        }
+
+        $module = GetModule::run($identifier, $version);
         $version = $module->versions[0];
         $this->info("Installing {$module->identifier}@{$version->version}");
 
         $files = $version->files();
         foreach ($files as $file) {
-            $this->info("Installing {$file['path']}", LOG_DEBUG);
+            $this->line("Installing {$file['path']}");
             CreateDirectoryRecursively::run($file['path']);
             $contents = Http::get($file['downloadUrl'])->body();
             File::put($file['path'], $contents);

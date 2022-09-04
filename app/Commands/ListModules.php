@@ -41,7 +41,5 @@ class ListModules extends Command
             implode(', ', $module->versionSummary),
         ])->toArray();
         $this->table($headings, $rows);
-
-        $this->confirm('☀️ Do you want to install one of Genesis modules in your app?');
     }
 }
