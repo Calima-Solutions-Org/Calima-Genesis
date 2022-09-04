@@ -4,7 +4,14 @@
 
 Genesis is a CLI tool built by [Calima](https://calimasolutions.com) for their own workflow. It's a CLI tool that provides an elegant and automated starting point for your project, as well as providing different modules that can be installed in your application to make development easier and faster.
 
+## Requirements
+- PHP8.0+ is required
 ## Installation
+Genesis can be installed with Composer by running the following command:
+
+```bash
+composer global require calima-solutions/calima-genesis
+```
 
 ### Updating
 
