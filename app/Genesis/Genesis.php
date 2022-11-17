@@ -27,7 +27,15 @@ class Genesis
 
     public static function configFolder(): string
     {
-        return $_SERVER['HOME'].'/.calima-genesis';
+        if (! empty($_SERVER['HOME'])) {
+            $homeDir = $_SERVER['HOME'];
+        } elseif (! empty($_SERVER['HOMEDRIVE']) && ! empty($_SERVER['HOMEPATH'])) {
+            $homeDir = $_SERVER['HOMEDRIVE'].$_SERVER['HOMEPATH'];
+        } else {
+            throw new \Exception('Cannot determine home directory.');
+        }
+
+        return $homeDir.'/.calima-genesis';
     }
 
     public static function configFilePath(): string
